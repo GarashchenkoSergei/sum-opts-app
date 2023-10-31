@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Container from 'react-bootstrap/Container';
-import { Button, InputGroup, Form, ListGroup, Card } from "react-bootstrap";
+import {Button, InputGroup, Form, ListGroup, Card, Alert} from "react-bootstrap";
 
 import { getAllSumOpts } from "./utils.js";
 
@@ -9,12 +9,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   const [ numberValue, setNumberValue ] = useState('');
   const [ results, setResults ] = useState([]);
+  const [ error, setError ] = useState('');
 
   const handleInputChange = (e) => {
+    setError('');
     setNumberValue(e.target.value);
   }
 
-  const handleClick = (e) => {
+  const handleClick = () => {
+    if (numberValue <= 0) {
+      return setError('Number should be greater than 0');
+    }
+
     setResults(getAllSumOpts(numberValue));
   }
 
@@ -25,6 +31,7 @@ function App() {
           <Form.Control
             placeholder="Put number here"
             aria-label="Put number here"
+            type="number"
             value={numberValue}
             onChange={handleInputChange}
           />
@@ -32,11 +39,16 @@ function App() {
             Get all options
           </Button>
         </InputGroup>
+        {error && <Alert variant={'warning'}>
+          {error}
+        </Alert>}
         <Card>
           <Card.Header>Number of possible options: {results.length}</Card.Header>
           <ListGroup>
             {results.map((item) => (
-              <ListGroup.Item>{item.toString().replaceAll(',','+')}</ListGroup.Item>
+              <ListGroup.Item key={item.toString()}>
+                {item.toString().replaceAll(',','+')}
+              </ListGroup.Item>
             ))}
           </ListGroup>
         </Card>
