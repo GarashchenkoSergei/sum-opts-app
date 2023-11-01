@@ -1,19 +1,21 @@
 export const getAllSumOpts = (n) => {
-  const opts = [[[]], [[1]], [[1, 1]], [[1, 1, 1], [3]]];
+  const options = [[[]], [[1]], [[1, 1]], [[1, 1, 1], [3]]];
 
   if (n <= 3) {
-    return opts[n];
+    return options[n];
   }
 
   for (let i = 4; i <= n; i++) {
-    opts.push([]);
+    const currentOptions = [];
 
     for (let j of [1, 3, 4]) {
-      const currentNumberOpts = opts[i - j].map(s => [...s, j]);
-
-      opts[opts.length - 1].push(...currentNumberOpts);
+      for (let prevOption of options[i - j]) {
+        currentOptions.push([...prevOption, j]);
+      }
     }
+
+    options.push(currentOptions);
   }
 
-  return opts[opts.length - 1];
+  return options[n];
 }
