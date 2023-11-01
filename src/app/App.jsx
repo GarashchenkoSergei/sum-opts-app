@@ -35,7 +35,7 @@ function App() {
           value={numberValue}
           handleInputChange={handleInputChange}
           buttonTitle={'Get all options'}
-          handleClick={handleClick}
+          handleSubmit={handleClick}
         />
         {message &&
           <AlertMessage message={message} variant={'info'}/>

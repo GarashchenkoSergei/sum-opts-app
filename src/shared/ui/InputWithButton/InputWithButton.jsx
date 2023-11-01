@@ -1,6 +1,12 @@
 import {Button, InputGroup, Form} from "react-bootstrap";
 
-export const InputWithButton = ({value, handleInputChange, handleClick, buttonTitle}) => {
+export const InputWithButton = ({value, handleInputChange, handleSubmit, buttonTitle}) => {
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  }
+
   return (
     <InputGroup className="mb-3">
       <Form.Control
@@ -9,8 +15,9 @@ export const InputWithButton = ({value, handleInputChange, handleClick, buttonTi
         type="number"
         value={value}
         onChange={handleInputChange}
+        onKeyPress={handleKeyPress}
       />
-      <Button variant="outline-secondary" id="button-addon2" onClick={handleClick}>
+      <Button variant="outline-secondary" id="button-addon2" onClick={handleSubmit}>
         {buttonTitle}
       </Button>
     </InputGroup>
